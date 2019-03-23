@@ -13,7 +13,8 @@ class HomePage extends Component{
 
         category: '',
         categories: [],
-        currentCategory: ''
+        currentCategory: '',
+        currentTarget:''
     };
 
 
@@ -29,6 +30,16 @@ class HomePage extends Component{
         this.setState({currentCategory: e.target.value})
     };
 
+    clickBack = (e, history) => {
+
+        this.setState({currentTarget: ''});
+        history.push('/');
+    };
+
+    productClick = (e) =>{
+        console.log(e.currentTarget.id);
+        this.setState({currentTarget: e.currentTarget.id});
+    };
 
     render() {
         const imgUrl = 'http://localhost:8000/uploads/';
@@ -36,7 +47,6 @@ class HomePage extends Component{
             <Fragment>
                 <div>
                     <select name="category" id="category" onChange={(e)=>this.selectHandle(e)}>
-
                         <optgroup>
                             <option value=''>All products</option>
                             {this.state.categories.map(category=>{
@@ -50,16 +60,35 @@ class HomePage extends Component{
                 <div className='product-wrapper' style={{padding: 10 + 'px'}}>
                     {!this.props.products ? <div>Loading</div> :
                         this.props.products.map((item, index) =>{
-                            console.log(item);
+
+                            if(this.state.currentTarget !==''){
+                                if((this.state.currentTarget==item._id))
+                                    //console.log(item.userId.username, this.props.username);
+                                return(
+                                    <div key={index} id={item._id} >
+                                        <img src={imgUrl + item.image} alt=""/>
+                                        <p>Title: {item.name}</p>
+                                        <p>Category: {item.category.title}</p>
+                                        <p>Price: {item.price} som</p>
+                                        <p>Description: {item.description}</p>
+                                        <p>User: {item.userId.displayname}</p>
+                                        <p>User phone: {item.userId.phone}</p>
+                                        <button onClick={(e) => this.clickBack(e, this.props.history)}>Back</button>
+                                        {item.userId.username===this.props.username ? <button>Delete</button> : null}
+
+                                    </div>
+                                )
+                            }
+                            else{
                             if(this.state.currentCategory!==''){
                                 if(this.state.currentCategory == item.category._id){
                                     return (
-
-                                        <div key={index} id={item._id}  className='product'>
+                                        <div key={index} id={item._id} onClick={(e) => this.productClick(e)} className='product'>
                                             <img src={imgUrl + item.image} alt=""/>
                                             <p>Title: {item.name}</p>
                                             <p>Price: {item.price} som</p>
                                             <p>Description: {item.description}</p>
+
                                         </div>
 
                                     );
@@ -68,15 +97,18 @@ class HomePage extends Component{
                             else{
                                 return (
 
-                                    <div key={index} id={item._id}  className='product'>
+                                    <div key={index} id={item._id} onClick={(e) => this.productClick(e)} className='product'>
                                         <img src={imgUrl + item.image} alt=""/>
                                         <p>Title: {item.name}</p>
                                         <p>Price: {item.price} som</p>
                                         <p>Description: {item.description}</p>
+
                                     </div>
 
+
+
                                 );
-                            }
+                            }}
                         })
                     }
                 </div>
@@ -84,14 +116,12 @@ class HomePage extends Component{
         );
     }
 
-
-
-
 }
 
 const mapStateToProps = (state) =>{
     return {
-        products: state.products
+        products: state.products,
+        username: state.username
     }
 };
 
