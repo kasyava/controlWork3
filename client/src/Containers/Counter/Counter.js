@@ -7,7 +7,7 @@ import {addCounter, decrementCounter, incrementCounter, subtractCounter, fetchCo
 class Counter extends Component{
 
     componentDidMount() {
-        this.props.fetchCounter();
+        //this.props.fetchCounter();
     }
 
 
@@ -40,7 +40,7 @@ const mapDispatchToProps = (dispatch) =>{
         decreaseCounter: (amount) => dispatch(decrementCounter(amount)),
         // addCounter: (amount) => dispatch(addCounter(amount)),
         // subtractCounter: (amount) => dispatch(subtractCounter(amount))
-        fetchCounter: () => dispatch(fetchCounter())
+        //fetchCounter: () => dispatch(fetchCounter())
     }
 
 };

@@ -59,40 +59,40 @@ db.once('open', async () => {
 
     console.log('Category created');
 
-    const [GTX2080, GTX2080Ti, corei9, corei7] = await Product.create(
+    const [GTX2080, GTX2080Ti, corei9, samsungLCD, mouse] = await Product.create(
         {
             name: "gtx 2080",
             price: 1000,
             description: "powerful GPU",
-            image: "",
+            image: "gtx2080.jpeg",
             category: gpus._id,
             userId: user._id
         }, {
             name: 'GTX 2080Ti',
             price: 1200,
             description: 'top gpu',
-            image: '',
+            image: 'TX2080Ti.jpeg',
             category: gpus._id,
             userId: admin._id
         }, {
             name: 'Core i 9',
             price: 700,
             description: 'top cpu',
-            image: '',
+            image: 'i9.jpeg',
             category: cpus._id,
             userId: admin._id
         }, {
             name: 'Samsung LCD 17 inch',
             price: 600,
             description: 'best quality',
-            image: '',
+            image: 'samsung.jpeg',
             category: monitors._id,
             userId: admin._id
         }, {
             name: 'Mouse A4tech',
             price: 600,
             description: 'best choise',
-            image: '',
+            image: 'a4tech.jpeg',
             category: other._id,
             userId: user._id
         }

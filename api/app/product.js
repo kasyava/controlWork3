@@ -28,7 +28,7 @@ router.get("/", (req, res) => {
         .catch(e => res.send(e).status(500))
 });
 
-router.post("/", [auth, permit('admin'), upload.single("image")], (req, res) => {
+router.post("/", [auth, upload.single("image")], (req, res) => {
     console.log(req.body);
 
     const productData = req.body;

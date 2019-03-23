@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 
+import {Route, Switch, BrowserRouter} from "react-router-dom";
+
 import './App.css';
-import Counter from "./Containers/Counter/Counter";
+
+
+import Register from './Containers/Register/Register'
+import Login from "./Containers/Login/Login";
+import HomePage from "./Containers/HomePage/HomePage";
+import ProductForm from "./Containers/ProductForm/ProductForm";
+import Layout from "./Components/Layout/Layout";
 
 
 
@@ -10,7 +18,17 @@ class App extends Component {
     return (
       <div className="App">
 
-        <Counter/>
+
+        <BrowserRouter>
+          <Layout>
+            <Switch>
+              <Route path='/' exact component={HomePage} />
+              <Route path='/register'  exact component={Register} />
+              <Route path='/login'  exact component={Login} />
+              <Route path='/addProduct'  exact component={ProductForm} />
+            </Switch>
+          </Layout>
+        </BrowserRouter>
 
       </div>
     );

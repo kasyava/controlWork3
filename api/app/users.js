@@ -22,19 +22,32 @@ const createRouter = () =>{
 
     router.post("/", upload.none(), (req, res) =>{
         console.log(req.body);
+
+        if(!req.body.username || !req.body.password || !req.body.displayname || !req.body.phone){
+            res.status(400).send({error: 'Fill in all the fields'});
+            return;
+        }
+
         const user = new User({
             username: req.body.username,
-            password: req.body.password
+            password: req.body.password,
+            displayname: req.body.displayname,
+            phone: req.body.phone
         });
 
         user.generateToken();
 
         user.save()
-            .then(user => res.send({name: user.username, token: user.token}))
+            .then(user => res.send({name: user.username, token: user.token, displayname: user.displayname, phone: user.phone}))
             .catch(error => res.status(400).send(error));
     });
 
     router.post('/sessions', upload.none(), async (req, res) =>{
+
+        if(!req.body.username || !req.body.password){
+            res.status(400).send({error: 'Fill in all the fields'});
+            return;
+        }
 
         const user = await User.findOne({username: req.body.username});
         if(!user){
@@ -54,7 +67,7 @@ const createRouter = () =>{
 
         await user.save();
 
-        res.send({name: user.username, token: user.token})
+        res.send({name: user.username, token: user.token, displayname: user.displayname, phone: user.phone})
 
 
     });
@@ -64,7 +77,7 @@ const createRouter = () =>{
         const success = {message: "Success"};
 
         if(!token) return res.send(success);
-
+        console.log('ddd');
         const user = await User.findOne({token});
         if(!user) return res.send(success);
 
