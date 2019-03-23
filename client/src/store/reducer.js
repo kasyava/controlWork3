@@ -1,4 +1,4 @@
-import {INCREMENT, DECREMENT, FETCH_LOGIN_SUCCESS, FETCH_REGISTER_SUCCESS, FETCH_LOGOUT_SUCCESS,SUBTRACT, FETCH_PRODUCTS_SUCCESS, FETCH_REQUEST, FETCH_ERROR, CHANGE_INPUT_HANDLE} from "./actions";
+import {INCREMENT, DECREMENT, FETCH_DELETE_PRODUCTS_SUCCESS, FETCH_LOGIN_SUCCESS, FETCH_REGISTER_SUCCESS, FETCH_LOGOUT_SUCCESS,SUBTRACT, FETCH_PRODUCTS_SUCCESS, FETCH_REQUEST, FETCH_ERROR, CHANGE_INPUT_HANDLE} from "./actions";
 
 const initialState ={
     counter: 0,
@@ -23,6 +23,7 @@ const reducer = (state = initialState, action) =>{
         case FETCH_PRODUCTS_SUCCESS:
             return {...state, products: action.products, isLoading: false};
 
+
         case FETCH_REQUEST:
             return {...state, isLoading: true};
 
@@ -38,7 +39,7 @@ const reducer = (state = initialState, action) =>{
 
         case FETCH_LOGIN_SUCCESS:
 
-            return {...state, token: action.data.token, displayname: action.data.displayname, isLoggedIn: true};
+            return {...state, token: action.data.token, username: action.data.name, displayname: action.data.displayname, isLoggedIn: true};
 
         case FETCH_LOGOUT_SUCCESS:
             return {...state, username: '', password: '', phone: '', token: '', displayname: '', isLoggedIn: false};

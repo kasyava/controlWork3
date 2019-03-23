@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
 
-import {fetchProducts} from "../../store/actions";
+import {fetchProducts,deleteProduct} from "../../store/actions";
 
 import "./HomePage.css"
 import axios from "../../axios-config";
@@ -63,7 +63,7 @@ class HomePage extends Component{
 
                             if(this.state.currentTarget !==''){
                                 if((this.state.currentTarget==item._id))
-                                    //console.log(item.userId.username, this.props.username);
+
                                 return(
                                     <div key={index} id={item._id} >
                                         <img src={imgUrl + item.image} alt=""/>
@@ -74,7 +74,7 @@ class HomePage extends Component{
                                         <p>User: {item.userId.displayname}</p>
                                         <p>User phone: {item.userId.phone}</p>
                                         <button onClick={(e) => this.clickBack(e, this.props.history)}>Back</button>
-                                        {item.userId.username===this.props.username ? <button>Delete</button> : null}
+                                        {item.userId.username===this.props.username ? <button onClick={(e) => this.props.deleteProduct(e, item._id, this.props.history, this.props.token)}>Delete</button> : null}
 
                                     </div>
                                 )
@@ -121,7 +121,8 @@ class HomePage extends Component{
 const mapStateToProps = (state) =>{
     return {
         products: state.products,
-        username: state.username
+        username: state.username,
+        token: state.token
     }
 };
 
@@ -130,7 +131,8 @@ const mapDispatchToProps = (dispatch) =>{
 
     return{
 
-         fetchProducts: () => dispatch(fetchProducts())
+         fetchProducts: () => dispatch(fetchProducts()),
+        deleteProduct: (e, itemId, history, token) => dispatch(deleteProduct(e, itemId, history, token))
     }
 
 };

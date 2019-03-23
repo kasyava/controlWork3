@@ -45,4 +45,13 @@ router.post("/", [auth, upload.single("image")], (req, res) => {
 
 });
 
+router.delete("/:id", [auth, upload.none()], (req, res) => {
+    console.log(req.params.id);
+
+    Product.findByIdAndRemove({_id: req.params.id})
+        .then((response) => res.send(response))
+        .catch((e) => res.send(e).status(500));
+
+});
+
 module.exports = router;

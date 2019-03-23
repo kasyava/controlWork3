@@ -10,6 +10,7 @@ export const SUBTRACT = 'SUBTRACK';
 export const FETCH_REQUEST = 'FETCH_REQUEST';
 
 export const FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS';
+export const FETCH_DELETE_PRODUCTS_SUCCESS = 'FETCH_DELETE_PRODUCTS_SUCCESS';
 export const FETCH_LOGIN_SUCCESS = 'FETCH_LOGIN_SUCCESS';
 export const FETCH_REGISTER_SUCCESS = 'FETCH_REGISTER_SUCCESS';
 export const FETCH_LOGOUT_SUCCESS = 'FETCH_LOGOUT_SUCCESS';
@@ -24,6 +25,8 @@ export const fetchRequest = () => ({type: FETCH_REQUEST});
 export const fetchProductsSuccess = (products) => {
     return {type: FETCH_PRODUCTS_SUCCESS, products};
 };
+
+
 export const fetchAddProductsSuccess = (products) => {
     return {type: FETCH_PRODUCTS_SUCCESS, products};
 };
@@ -56,6 +59,7 @@ export const fetchProducts = () => {
     }
 };
 
+
 export const sendLoginForm = (e, username, password, history) => {
     e.preventDefault();
     const formData = new FormData();
@@ -65,6 +69,7 @@ export const sendLoginForm = (e, username, password, history) => {
         dispatch(fetchRequest());
         axios.post('users/sessions', formData)
             .then(responce =>{
+                console.log(responce.data);
                 dispatch(fetchLoginSuccess(responce.data))
                 history.push('/');
             }, error =>{
@@ -113,6 +118,23 @@ export const sendProductForm = (e, state, history) =>{
         }
     }
 
+};
+
+export const deleteProduct = (e, itemId, history, token) => {
+    e.preventDefault();
+    const headers = {"Token": token};
+
+    return (dispatch) => {
+        dispatch(fetchRequest());
+        axios.delete('products/' + itemId,{headers})
+            .then(responce =>{
+                console.log(responce.data);
+                //dispatch(fetchDeleteProductsSuccess(responce.data))
+                history.push('/');
+            }, error =>{
+                dispatch(fetchError(error));
+            })
+    }
 };
 
 
