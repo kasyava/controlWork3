@@ -60,9 +60,6 @@ const createRouter = () =>{
             return res.status(400).send({error: 'Password is wrong'});
         }
 
-
-
-        //res.send(res.something);
         user.generateToken();
 
         await user.save();

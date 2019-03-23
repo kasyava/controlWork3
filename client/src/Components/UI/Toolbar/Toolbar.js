@@ -12,7 +12,8 @@ const Toolbar = (props) =>{
         props.isLoggedIn ?
             <div>
                 <span>Hello, {props.displayname}!</span>
-                <NavLink className="buttonNav" activeClassName='buttonNavActiv' to="/" onClick={(e) => props.fetchLogout(e, props.token)}>Logout</NavLink>
+                <NavLink className="buttonNav" activeClassName='buttonNavActiv' to='/addProduct'>Add Product</NavLink>
+                <NavLink className="buttonNav"  to="/" onClick={(e) => props.fetchLogout(e, props.token)}>Logout</NavLink>
             </div>
             :
         <Nav className='justify-content-end'>

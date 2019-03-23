@@ -97,8 +97,6 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) =>{
 
     return{
-
-        //changeInputHandle: (e) => dispatch(changeInputHandle(e)),
         sendRegisterForm: (e, username, password, displayname, phone,  history) => dispatch(sendRegisterForm(e, username, password, displayname, phone,  history))
     }
 

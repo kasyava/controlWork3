@@ -6,7 +6,7 @@ const nanoid = require("nanoid");
 const config = require("../config");
 const Product = require("../models/Product");
 const auth = require("../middlewares/middleware");
-const permit = require("../middlewares/permit");
+//const permit = require("../middlewares/permit");
 
 const storage = multer.diskStorage({
     destination(req, file, cd){

@@ -18,9 +18,8 @@ const Header = (props) =>{
                 <NavLink  exact to='/'><img className='logo' src={logo} alt=""/></NavLink>
 
                 <Nav className="mr-auto">
-                    {/*<NavLink exact className="buttonNav" activeClassName='buttonNavActiv' to="/">Home</NavLink>*/}
+                    <NavLink exact className="buttonNav" activeClassName='buttonNavActiv' to="/">Home</NavLink>
 
-                    {props.isLoggedIn !== false ? <NavLink className="buttonNav" activeClassName='buttonNavActiv' to='/addProduct'>Add Product</NavLink> : null}
                 </Nav>
                 {props.children}
             </Navbar>
@@ -30,10 +29,11 @@ const Header = (props) =>{
 };
 
 
-
-const mapStateToProps = (state) =>{
-    return {
-        isLoggedIn: state.isLoggedIn,
-    }
-};
-export default connect(mapStateToProps, null)(Header);
+//
+// const mapStateToProps = (state) =>{
+//     return {
+//         isLoggedIn: state.isLoggedIn,
+//     }
+// };
+// export default connect(mapStateToProps, null)(Header);
+export default Header;
