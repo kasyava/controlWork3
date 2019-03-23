@@ -15,6 +15,8 @@ export const FETCH_LOGIN_SUCCESS = 'FETCH_LOGIN_SUCCESS';
 export const FETCH_REGISTER_SUCCESS = 'FETCH_REGISTER_SUCCESS';
 export const FETCH_LOGOUT_SUCCESS = 'FETCH_LOGOUT_SUCCESS';
 export const FETCH_ERROR = 'FETCH_ERROR';
+export const PRODUCT_CLICK = 'PRODUCT_CLICK';
+export const BACK_CLICK = 'BACK_CLICK';
 
 export const CHANGE_INPUT_HANDLE = 'CHANGE_INPUT_HANDLE';
 
@@ -130,13 +132,25 @@ export const deleteProduct = (e, itemId, history, token) => {
             .then(responce =>{
                 console.log(responce.data);
                 //dispatch(fetchDeleteProductsSuccess(responce.data))
-                history.push('/');
+                window.location.reload();
             }, error =>{
                 dispatch(fetchError(error));
             })
     }
 };
 
+export const myProductClick = (e) =>{
+    console.log(e.currentTarget.id);
+    //this.setState({currentTarget: e.currentTarget.id});
+    return{type: PRODUCT_CLICK, e}
+};
+
+export const myClickBack = (e, history) => {
+
+    //this.setState({currentTarget: ''});
+    history.push('/');
+    return{type: BACK_CLICK}
+};
 
 export const fetchLogout = (token) =>{
 

@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
 
-import {fetchProducts,deleteProduct} from "../../store/actions";
+import {fetchProducts,deleteProduct, myProductClick, myClickBack} from "../../store/actions";
 
 import "./HomePage.css"
 import axios from "../../axios-config";
@@ -61,8 +61,8 @@ class HomePage extends Component{
                     {!this.props.products ? <div>Loading</div> :
                         this.props.products.map((item, index) =>{
 
-                            if(this.state.currentTarget !==''){
-                                if((this.state.currentTarget==item._id))
+                            if(this.props.currentTarget !==''){
+                                if((this.props.currentTarget==item._id))
 
                                 return(
                                     <div key={index} id={item._id} >
@@ -73,7 +73,7 @@ class HomePage extends Component{
                                         <p>Description: {item.description}</p>
                                         <p>User: {item.userId.displayname}</p>
                                         <p>User phone: {item.userId.phone}</p>
-                                        <button onClick={(e) => this.clickBack(e, this.props.history)}>Back</button>
+                                        <button onClick={(e) => this.props.myClickBack(e, this.props.history)}>Back</button>
                                         {item.userId.username===this.props.username ? <button onClick={(e) => this.props.deleteProduct(e, item._id, this.props.history, this.props.token)}>Delete</button> : null}
 
                                     </div>
@@ -82,8 +82,10 @@ class HomePage extends Component{
                             else{
                             if(this.state.currentCategory!==''){
                                 if(this.state.currentCategory == item.category._id){
+                                    {/*<div key={index} id={item._id} onClick={(e) => this.productClick(e)} className='product'>*/}
                                     return (
-                                        <div key={index} id={item._id} onClick={(e) => this.productClick(e)} className='product'>
+
+                                        <div key={index} id={item._id} onClick={(e) => this.props.myProductClick(e)} className='product'>
                                             <img src={imgUrl + item.image} alt=""/>
                                             <p>Title: {item.name}</p>
                                             <p>Price: {item.price} som</p>
@@ -95,9 +97,10 @@ class HomePage extends Component{
                                 }
                             }
                             else{
+                                {/*<div key={index} id={item._id} onClick={(e) => this.productClick(e)} className='product'>*/}
                                 return (
 
-                                    <div key={index} id={item._id} onClick={(e) => this.productClick(e)} className='product'>
+                                    <div key={index} id={item._id} onClick={(e) => this.props.myProductClick(e)} className='product'>
                                         <img src={imgUrl + item.image} alt=""/>
                                         <p>Title: {item.name}</p>
                                         <p>Price: {item.price} som</p>
@@ -122,7 +125,8 @@ const mapStateToProps = (state) =>{
     return {
         products: state.products,
         username: state.username,
-        token: state.token
+        token: state.token,
+        currentTarget: state.currentTarget
     }
 };
 
@@ -132,7 +136,11 @@ const mapDispatchToProps = (dispatch) =>{
     return{
 
          fetchProducts: () => dispatch(fetchProducts()),
-        deleteProduct: (e, itemId, history, token) => dispatch(deleteProduct(e, itemId, history, token))
+        deleteProduct: (e, itemId, history, token) => dispatch(deleteProduct(e, itemId, history, token)),
+        myProductClick: (e) => dispatch(myProductClick(e)),
+        myClickBack: (e, history) => dispatch(myClickBack(e, history)),
+
+
     }
 
 };
